@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:MauiSampleCamera.ViewModels"
+             xmlns:model="clr-namespace:MauiSampleCamera.Models"
+             x:Class="MauiSampleCamera.MainPage"
+             x:DataType="viewmodel:GalleryViewModel"
+             Title="MAUI Camera">
+
+    <Grid
+        ColumnDefinitions="*,*"
+        ColumnSpacing="5"
+        RowDefinitions="*,Auto"
+        RowSpacing="0">
+
+        <!--Show a list of previews of the captured files-->
+        <CollectionView
+            Grid.ColumnSpan="2"
+            ItemsSource="{Binding Files}"
+            SelectionMode="None">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:CaptureDetails">
+                    <Grid Padding="10">
+                        <Frame HeightRequest="150" 
+                            Padding="0"
+                            IsClippedToBounds="True"
+                            CornerRadius="0"
+                            BorderColor="Transparent"
+                            Background="Transparent">
+                            <Grid Padding="0" ColumnDefinitions="*,*">
+                                <Image Source="{Binding Path}" Aspect="AspectFill" HeightRequest="150"/>
+                                <Label Text="{Binding FileName}" FontSize="16" Grid.Column="1" Padding="10" />
+                            </Grid>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!--Open the camera and capture a photo-->
+        <Button
+            Margin="20"
+            Grid.Row="1"
+            Grid.Column="0"
+            Text="Capture photo"
+            SemanticProperties.Hint="Capture photo"
+            Command="{Binding CapturePhotoCommand}"
+            HorizontalOptions="Center"/>
+
+        <!--Open the camera and capture a video-->
+        <Button
+            Margin="20"
+            Grid.Row="1"
+            Grid.Column="1"
+            Text="Capture video"
+            SemanticProperties.Hint="Capture video"
+            Command="{Binding CaptureVideoCommand}"
+            HorizontalOptions="Center"/>
+
+        <!--Show an activity indicator while the application is busy-->
+        <ActivityIndicator 
+            IsVisible="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="CenterAndExpand"
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"/>
+    </Grid>
+</ContentPage>
