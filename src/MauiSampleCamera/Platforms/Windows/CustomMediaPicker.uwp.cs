@@ -8,10 +8,10 @@ namespace MauiSampleCamera;
 
 public partial class CustomMediaPicker : IMediaPicker
 {
-	public partial Task<FileResult> CapturePhotoAsync(MediaPickerOptions options = null)
+	public partial Task<FileResult> CapturePhotoAsync(MediaPickerOptions options)
 		=> CaptureAsync(false);
 
-	public partial Task<FileResult> CaptureVideoAsync(MediaPickerOptions options = null)
+	public partial Task<FileResult> CaptureVideoAsync(MediaPickerOptions options)
 		=> CaptureAsync(true);
 
 	private async Task<FileResult> CaptureAsync(bool isVideo)

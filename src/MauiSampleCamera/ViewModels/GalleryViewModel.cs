@@ -7,7 +7,7 @@ namespace MauiSampleCamera.ViewModels;
 
 public partial class GalleryViewModel : ObservableObject
 {
-	// the capture files will be stored inside this folder
+	// the captured files will be stored inside this folder
 	private static readonly string GalleryFolder = FileSystem.AppDataDirectory;
 
 	private readonly IMediaPicker _mediaPicker;
@@ -25,20 +25,19 @@ public partial class GalleryViewModel : ObservableObject
 	[ObservableProperty]
 	private bool _isBusy;
 
+	// contains references to the captured photos and videos
 	public ObservableCollection<CaptureDetails> Files { get; } = new();
 
-	[ICommand]
-	// open the camera and capture a photo
-	private async void CapturePhoto()
+	[RelayCommand]
+	private Task CapturePhoto()
 	{
-		await Capture(false);
+		return Capture(false);
 	}
 
-	[ICommand]
-	// open the camera and capture a video
-	private async void CaptureVideo()
+	[RelayCommand]
+	private Task CaptureVideo()
 	{
-		await Capture(true);
+		return Capture(true);
 	}
 
 	private async Task Capture(bool isVideo)
@@ -58,7 +57,7 @@ public partial class GalleryViewModel : ObservableObject
 
 		try
 		{
-			// mark as busy
+			// mark as busy while using the camera
 			IsBusy = true;
 
 			// open the camera and capture a photo or video
@@ -97,5 +96,4 @@ public partial class GalleryViewModel : ObservableObject
 			IsBusy = false;
 		}
 	}
-
 }
