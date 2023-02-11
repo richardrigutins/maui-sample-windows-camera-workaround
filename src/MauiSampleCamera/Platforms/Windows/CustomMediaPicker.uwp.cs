@@ -1,4 +1,7 @@
-﻿using Windows.Foundation.Collections;
+﻿// Based on code by https://github.com/GiampaoloGabba
+// See https://github.com/dotnet/maui/issues/7660
+
+using Windows.Foundation.Collections;
 using Windows.Media.Capture;
 using Windows.Storage;
 using Windows.System;

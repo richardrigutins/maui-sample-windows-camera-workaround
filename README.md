@@ -1,13 +1,22 @@
 # maui-sample-windows-camera-workaround
-This is sample .NET MAUI camera app that illustrates a workaround to allow capturing photos and videos on Windows.
 
-The `CapturePhotoAsync` and `CaptureVideoAsync` methods in the default `IMediaPicker` implementation (`MediaPicker.Default`) currently always return null on Windows.
+This repository contains a sample .NET MAUI camera app that illustrates a workaround to allow capturing photos and videos on Windows.
 
-As a temporary workaround, you can create a custom `IMediaPicker` implementation (`CustomMediaPicker`) that:
-- on Android, iOS, Mac Catalyst: calls the `MediaPicker.Default` methods.
-- on Windows: uses a custom CameraCaptureUI implementation (`CustomCameraCaptureUI`) to open the camera.
+## The problem
+
+Currently, the `CapturePhotoAsync` and `CaptureVideoAsync` methods in the default `IMediaPicker` implementation (`MediaPicker.Default`) always return null when running on Windows.
+
+The workaround consists of creating a custom `IMediaPicker` implementation, that uses the launcher to open the Windows Camera app.
+On the other platform, the default `IMediaPicker` implementation is used.
+
+## Workaround logic
+
+The workaround logic is contained in the platform specific `CustomMediaPicker` class implementation for Windows:
 
 ```csharp
+// Based on code by https://github.com/GiampaoloGabba
+// See https://github.com/dotnet/maui/issues/7660
+
 using Windows.Foundation.Collections;
 using Windows.Media.Capture;
 using Windows.Storage;
@@ -89,5 +98,3 @@ public partial class CustomMediaPicker : IMediaPicker
 	}
 }
 ```
-
-
